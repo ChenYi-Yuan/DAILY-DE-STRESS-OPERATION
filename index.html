@@ -1,3 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>置頂音樂控制列</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #top-music-bar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background-color: #333333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #music-btn {
+            padding: 6px 14px;
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        #music-btn.playing {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="top-music-bar">
+        <span>🎵 網頁背景音樂控制：</span>
+        <button id="music-btn" onclick="toggleMusic()">🔇 點此開啟音樂</button>
+        
+        <!-- 注意：請確認你的音樂檔名真的叫做 music.mp3 -->
+        <audio id="bg-music" src="music.mp3" loop></audio>
+    </div>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const btn = document.getElementById('music-btn');
+        music.volume = 0.5; // 音量設定為 50%
+
+        function toggleMusic() {
+            if (music.paused) {
+                // 嘗試播放音樂，並偵測有沒有失敗
+                music.play().then(() => {
+                    // 播放成功才會變綠色！
+                    btn.innerHTML = "🔊 點此關閉音樂";
+                    btn.classList.add('playing');
+                }).catch((error) => {
+                    // 播放失敗時，直接跳出視窗告訴你原因
+                    alert("播放失敗！瀏覽器找不到「music.mp3」這個檔案，或是音樂格式不支援。\n\n系統錯誤訊息：" + error.message);
+                });
+            } else {
+                music.pause();
+                btn.innerHTML = "🔇 點此開啟音樂";
+                btn.classList.remove('playing');
+            }
+        }
+    </script>
+
+</body>
+</html>
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -2157,3 +2228,4 @@ nav.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () 
 </script>
 </body>
 </html>
+
